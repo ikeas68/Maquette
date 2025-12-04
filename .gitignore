@@ -1,0 +1,9 @@
+node_modules
+.DS_Store
+.dist
+vite.svg
+npm-debug.log*
+*.log
+.vscode
+.idea
+coverage
