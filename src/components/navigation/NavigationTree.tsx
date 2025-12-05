@@ -1,13 +1,13 @@
 import { TreeItem, TreeView } from '@mui/x-tree-view';
 import { useLocation, useNavigate } from 'react-router-dom';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import TableViewIcon from '@mui/icons-material/TableView';
-import DesignServicesIcon from '@mui/icons-material/DesignServices';
-import ViewKanbanIcon from '@mui/icons-material/ViewKanban';
-import CategoryIcon from '@mui/icons-material/Category';
-import InsightsIcon from '@mui/icons-material/Insights';
-import FormIcon from '@mui/icons-material/Description';
-import AutoAwesomeMosaicIcon from '@mui/icons-material/AutoAwesomeMosaic';
+import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
+import StorageRoundedIcon from '@mui/icons-material/StorageRounded';
+import DesignServicesRoundedIcon from '@mui/icons-material/DesignServicesRounded';
+import ViewKanbanRoundedIcon from '@mui/icons-material/ViewKanbanRounded';
+import WidgetsRoundedIcon from '@mui/icons-material/WidgetsRounded';
+import QueryStatsRoundedIcon from '@mui/icons-material/QueryStatsRounded';
+import StickyNote2RoundedIcon from '@mui/icons-material/StickyNote2Rounded';
+import AutoAwesomeMotionRoundedIcon from '@mui/icons-material/AutoAwesomeMotionRounded';
 import { Box, Typography } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
@@ -16,25 +16,25 @@ const navItems = [
   {
     id: 'overview',
     label: 'Overview',
-    icon: <InsightsIcon fontSize="small" />,
-    children: [{ id: 'dashboard', label: 'Dashboard', icon: <DashboardIcon fontSize="small" />, path: '/' }]
+    icon: <QueryStatsRoundedIcon fontSize="medium" />,
+    children: [{ id: 'dashboard', label: 'Dashboard', icon: <DashboardRoundedIcon fontSize="medium" />, path: '/' }]
   },
   {
     id: 'data',
     label: 'Data & Ops',
-    icon: <TableViewIcon fontSize="small" />,
+    icon: <StorageRoundedIcon fontSize="medium" />,
     children: [
-      { id: 'grid', label: 'Data Grid', icon: <CategoryIcon fontSize="small" />, path: '/data-grid' },
-      { id: 'kanban', label: 'Kanban Board', icon: <ViewKanbanIcon fontSize="small" />, path: '/kanban' }
+      { id: 'grid', label: 'Data Grid', icon: <WidgetsRoundedIcon fontSize="medium" />, path: '/data-grid' },
+      { id: 'kanban', label: 'Kanban Board', icon: <ViewKanbanRoundedIcon fontSize="medium" />, path: '/kanban' }
     ]
   },
   {
     id: 'experiments',
     label: 'Experience',
-    icon: <DesignServicesIcon fontSize="small" />,
+    icon: <DesignServicesRoundedIcon fontSize="medium" />,
     children: [
-      { id: 'form', label: 'Form Builder', icon: <FormIcon fontSize="small" />, path: '/form' },
-      { id: 'gallery', label: 'UI Gallery', icon: <AutoAwesomeMosaicIcon fontSize="small" />, path: '/gallery' }
+      { id: 'form', label: 'Form Builder', icon: <StickyNote2RoundedIcon fontSize="medium" />, path: '/form' },
+      { id: 'gallery', label: 'UI Gallery', icon: <AutoAwesomeMotionRoundedIcon fontSize="medium" />, path: '/gallery' }
     ]
   }
 ];
@@ -51,7 +51,7 @@ export const NavigationTree = () => {
 
   return (
     <Box sx={{ pt: 2 }}>
-      <Typography variant="overline" color="text.secondary" sx={{ px: 1.5 }}>
+      <Typography variant="overline" color="text.secondary" sx={{ px: 1.5, fontSize: '0.9rem', letterSpacing: 1 }}>
         Explorer
       </Typography>
       <TreeView
@@ -67,9 +67,11 @@ export const NavigationTree = () => {
             key={item.id}
             nodeId={item.id}
             label={
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.4 }}>
                 {item.icon}
-                <Typography variant="body2">{item.label}</Typography>
+                <Typography variant="subtitle1" fontWeight={700}>
+                  {item.label}
+                </Typography>
               </Box>
             }
           >
@@ -78,9 +80,11 @@ export const NavigationTree = () => {
                 key={child.id}
                 nodeId={child.path}
                 label={
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.2 }}>
                     {child.icon}
-                    <Typography variant="body2">{child.label}</Typography>
+                    <Typography variant="subtitle2" fontWeight={600}>
+                      {child.label}
+                    </Typography>
                   </Box>
                 }
                 onClick={() => navigate(child.path)}

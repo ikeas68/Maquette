@@ -15,7 +15,7 @@ import {
   Typography,
   useMediaQuery
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuRoundedIcon from '@mui/icons-material/MenuRounded';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { ThemeName, themeLabels } from '../../theme/presets';
@@ -33,12 +33,12 @@ interface Props {
 
 export const AppLayout = ({ children }: Props) => {
   const isMobile = useMediaQuery('(max-width:900px)');
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const { themeName, setThemeName, theme } = useContext(ThemeSwitcherContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [aboutOpen, setAboutOpen] = useState(false);
 
-  const handleDrawerToggle = () => setMobileOpen((prev) => !prev);
+  const handleDrawerToggle = () => setDrawerOpen((prev) => !prev);
 
   const paletteOptions = useMemo(() => Object.entries(themeLabels) as [ThemeName, string][], []);
 
@@ -72,10 +72,10 @@ export const AppLayout = ({ children }: Props) => {
           M
         </Avatar>
         <Box>
-          <Typography variant="subtitle2" fontWeight={700}>
+          <Typography variant="subtitle1" fontWeight={700}>
             Maquette POC
           </Typography>
-          <Typography variant="caption" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.4 }}>
             Frontend only
           </Typography>
         </Box>
@@ -83,7 +83,7 @@ export const AppLayout = ({ children }: Props) => {
       <Divider />
       <NavigationTree />
       <Box sx={{ flexGrow: 1 }} />
-      <Typography variant="caption" color="text.secondary">
+      <Typography variant="body2" color="text.secondary">
         Edition live & itérative
       </Typography>
     </Box>
@@ -98,13 +98,25 @@ export const AppLayout = ({ children }: Props) => {
         sx={{ backdropFilter: 'blur(18px)', borderBottom: `1px solid ${theme.palette.divider}`, backgroundImage: 'none' }}
       >
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Stack direction="row" spacing={1} alignItems="center">
-            {isMobile && (
-              <IconButton color="inherit" edge="start" onClick={handleDrawerToggle} aria-label="open drawer">
-                <MenuIcon />
-              </IconButton>
-            )}
-            <Typography variant="h6" component="div" sx={{ fontWeight: 700 }}>
+          <Stack direction="row" spacing={1.5} alignItems="center">
+            <IconButton
+              color="inherit"
+              edge="start"
+              onClick={handleDrawerToggle}
+              aria-label="open navigation drawer"
+              sx={{
+                borderRadius: 2,
+                p: 1.2,
+                bgcolor: theme.palette.background.paper,
+                boxShadow: 1,
+                '&:hover': {
+                  bgcolor: theme.palette.action.hover
+                }
+              }}
+            >
+              <MenuRoundedIcon fontSize="large" />
+            </IconButton>
+            <Typography variant={isMobile ? 'h6' : 'h5'} component="div" sx={{ fontWeight: 800 }}>
               Experience Center
             </Typography>
           </Stack>
@@ -123,35 +135,23 @@ export const AppLayout = ({ children }: Props) => {
         </Toolbar>
       </AppBar>
 
-      <Box component="nav" sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }} aria-label="navigation drawer">
-        {isMobile ? (
-          <Drawer
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            ModalProps={{ keepMounted: true }}
-            sx={{
-              '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, borderRight: `1px solid ${theme.palette.divider}` }
-            }}
-          >
-            {drawer}
-          </Drawer>
-        ) : (
-          <Drawer
-            variant="permanent"
-            open
-            sx={{
-              '& .MuiDrawer-paper': {
-                boxSizing: 'border-box',
-                width: drawerWidth,
-                borderRight: `1px solid ${theme.palette.divider}`,
-                backgroundImage: 'linear-gradient(180deg, rgba(0,0,0,0.04), transparent)'
-              }
-            }}
-          >
-            {drawer}
-          </Drawer>
-        )}
+      <Box component="nav" aria-label="navigation drawer">
+        <Drawer
+          variant="temporary"
+          open={drawerOpen}
+          onClose={handleDrawerToggle}
+          ModalProps={{ keepMounted: true }}
+          PaperProps={{
+            sx: {
+              boxSizing: 'border-box',
+              width: drawerWidth,
+              borderRight: `1px solid ${theme.palette.divider}`,
+              backgroundImage: 'linear-gradient(180deg, rgba(0,0,0,0.04), transparent)'
+            }
+          }}
+        >
+          {drawer}
+        </Drawer>
       </Box>
 
       <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, mt: 8 }}>
