@@ -1,3 +1,4 @@
+import React from 'react';
 import { TreeItem, TreeView } from '@mui/x-tree-view';
 import { useLocation, useNavigate } from 'react-router-dom';
 import DashboardRoundedIcon from '@mui/icons-material/DashboardRounded';
@@ -49,6 +50,12 @@ export const NavigationTree = () => {
   const { pathname } = useLocation();
   const expanded = findExpanded(pathname);
 
+  const handleNodeSelect = (_event: React.SyntheticEvent, nodeId: string) => {
+    if (nodeId.startsWith('/')) {
+      navigate(nodeId);
+    }
+  };
+
   return (
     <Box sx={{ pt: 2 }}>
       <Typography variant="overline" color="text.secondary" sx={{ px: 1.5, fontSize: '0.9rem', letterSpacing: 1 }}>
@@ -60,6 +67,7 @@ export const NavigationTree = () => {
         defaultCollapseIcon={<ExpandMoreIcon />}
         expanded={expanded}
         selected={pathname}
+        onNodeSelect={handleNodeSelect}
         sx={{ flexGrow: 1, overflowY: 'auto' }}
       >
         {navItems.map((item) => (
@@ -87,7 +95,6 @@ export const NavigationTree = () => {
                     </Typography>
                   </Box>
                 }
-                onClick={() => navigate(child.path)}
               />
             ))}
           </TreeItem>
